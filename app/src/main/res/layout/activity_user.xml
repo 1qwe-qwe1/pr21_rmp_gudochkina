@@ -11,7 +11,7 @@
         android:id="@+id/nameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Имя:"
+        android:text="@string/name"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,20 +19,21 @@
     <EditText
         android:id="@+id/name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
-        android:hint="Введите имя"
+        android:hint="@string/enter_name"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/nameLabel"
+        android:autofillHints="name"/>
 
     <TextView
         android:id="@+id/yearLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Год рождения:"
+        android:text="@string/year_of_birth"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
@@ -40,13 +41,14 @@
     <EditText
         android:id="@+id/year"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
-        android:hint="Введите год"
+        android:hint="@string/enter_year"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yearLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/yearLabel"
+        android:autofillHints="birthDate"/>
 
     <Button
         android:id="@+id/saveButton"
@@ -54,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:onClick="save"
-        android:text="Сохранить"
+        android:text="@string/save"
         app:layout_constraintEnd_toStartOf="@+id/deleteButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/year" />
@@ -67,7 +69,7 @@
         android:layout_marginTop="32dp"
         android:backgroundTint="#FF0000"
         android:onClick="delete"
-        android:text="Удалить"
+        android:text="@string/delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/saveButton"
         app:layout_constraintTop_toBottomOf="@+id/year" />
