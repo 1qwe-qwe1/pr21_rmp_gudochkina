@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         nameInput = findViewById(R.id.nameInput);
         yearInput = findViewById(R.id.yearInput);
         addButton = findViewById(R.id.addButton);
-        viewButton = findViewById(R.id.viewButton);
         userList = findViewById(R.id.userList);
 
         sqlHelper = new DatabaseHelper(this);
@@ -63,9 +62,26 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
+                int year;
+                try {
+                    year = Integer.parseInt(yearStr);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(MainActivity.this,
+                            "Год должен быть числом!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (year < DatabaseHelper.MIN_YEAR || year > DatabaseHelper.MAX_YEAR) {
+                    Toast.makeText(MainActivity.this,
+                            "Год должен быть между " + DatabaseHelper.MIN_YEAR
+                                    + " и " + DatabaseHelper.MAX_YEAR,
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 ContentValues cv = new ContentValues();
                 cv.put(DatabaseHelper.COLUMN_NAME, name);
-                cv.put(DatabaseHelper.COLUMN_YEAR, Integer.parseInt(yearStr));
+                cv.put(DatabaseHelper.COLUMN_YEAR, year);
 
                 long result = db.insert(DatabaseHelper.TABLE, null, cv);
                 if (result > 0) {
@@ -92,20 +108,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadUsers() {
-        userCursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE, null);
+        Cursor newCursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE, null);
 
-        String[] headers = new String[]{DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_YEAR};
-        int[] to = new int[]{android.R.id.text1, android.R.id.text2};
-
-        userAdapter = new SimpleCursorAdapter(
-                this,
-                android.R.layout.simple_list_item_2,
-                userCursor,
-                headers,
-                to,
-                0
-        );
-        userList.setAdapter(userAdapter);
+        if (userAdapter == null) {
+            String[] headers = new String[]{DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_YEAR};
+            int[] to = new int[]{android.R.id.text1, android.R.id.text2};
+            userAdapter = new SimpleCursorAdapter(this,
+                    android.R.layout.simple_list_item_2, newCursor, headers, to, 0);
+            userList.setAdapter(userAdapter);
+        } else {
+            userAdapter.changeCursor(newCursor);
+        }
+        userCursor = newCursor;
     }
 
     @Override

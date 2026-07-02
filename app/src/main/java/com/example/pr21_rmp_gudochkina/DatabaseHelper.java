@@ -13,6 +13,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_YEAR = "year";
 
+    public static final int MIN_YEAR = 1900;
+    public static final int MAX_YEAR = 2026;
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA);
     }
